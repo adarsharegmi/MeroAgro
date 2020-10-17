@@ -1,0 +1,70 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+*
+#header {
+    border-radius: 0.2vw;
+    border-color: #878b87;
+    background-color: #40ac40;
+    border-style: none none solid none;
+}
+
+.navbar i {
+    font-size: 1.5vw;
+}
+
+.navbar a{
+    font-size: 1.2vw;
+}
+body {
+    /*background-color: #;*/
+}
+
+.search-box {
+    position: relative;
+    margin-left: 5vw;
+    margin-right: 8vw;
+}
+
+.search-box input {
+    padding-right: 3.5vw;
+    min-height: 38px;
+    border: none;
+    background: #faf7fd;
+    border-radius: 4px;
+}
+
+.search-box input:focus {
+    background: #fff;
+    box-shadow: none;
+}
+
+.search-box .input-group-addon {
+    min-width: 35px;
+    border: none;
+    background: transparent;
+    position: absolute;
+    right: 0;
+    z-index: 9;
+    padding: 10px 7px;
+    height: 100%;
+}
+
+.search-box i {
+    color: #386d15;
+    font-size: 2vw;
+}
+
+#search{
+    width: 35vw;
+}
+
+.register-form input {
+    height: 4vw;
+    max-width: 100%;
+}
+.register-form, .register-form select, .register-form option, .register-form input{
+    font-size: 1.2vw;
+}

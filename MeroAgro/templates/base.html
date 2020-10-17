@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load  static %}
+    {% block head %}
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Nepal Agro</title>
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+        {#    link static css    #}
+        <link rel="stylesheet" href="{% static  'css/base.css' %}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        {# for vue frontend      #}
+    {% endblock %}
+
+</head>
+<body>
+{% block navbar %}
+    <nav id="header" class="navbar navbar-expand-lg navbar-dark">
+        <a href="#" class="navbar-brand">
+            <img src="/static/images/data.png" height="70" alt="Logo">
+        </a>
+
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ml-4">
+                <form class="navbar-form form-inline">
+                    <div class="input-group search-box">
+                        <input type="text" id="search" class="form-control" placeholder="Search here...">
+                        <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
+                    </div>
+                </form>
+                    <a href="/" class="nav-item nav-link ml-5 active text-center"><i class="fas fa-igloo"></i> <br>Home</a>
+                    <a href="#" class="nav-item nav-link ml-5 active text-center"><i class="fas fa-user"></i> <br>Profile</a>
+                    <a href="#" class="nav-item nav-link ml-5 active text-center"><i class="fas fa-bell"></i> <br>Notification</a>
+                    <a href="#" class="nav-item nav-link ml-5 active text-center"><i class="fas fa-cog"></i> <br>Setting</a>
+
+
+                    {#                {% if not session.get('user') %}#}
+                    <a href='/register/' class="btn btn-info ml-5"><i class="fas fa-sign-out-alt"></i><br>Login</a>
+                    {#                {% else %}#}
+                    {#                    <button type="button" data-toggle="modal" data-target="#accountmodel"#}
+                    {#                            class="btn btn-info ml-5">  {{ session.get('user') }} </button>#}
+                    {#                {% endif %}#}
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block body %}{% endblock %}
+{% block footer %}
+
+
+{% endblock %}
+</body>
+</html>
