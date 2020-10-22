@@ -1,0 +1,23 @@
+User creation and email sending
+
+user creates an account
+add user in database
+call sendConfirm(user)
+
+set user non active
+generate token
+start sendemail thread
+
+
+threads send email
+
+
+
+Token verification and account activation
+
+user clicks on link
+urls py frwd to pckg
+valid token success page
+else error
+
+link: : https://pypi.org/project/django-email-verification/

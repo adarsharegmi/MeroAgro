@@ -17,10 +17,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from .views import  *
+from .views import *
+from django_email_verification import urls as mail_urls
+
 
 urlpatterns = [
     path('',base),
     path('register/', include("UserManagementSystem.urls")),
+    path('email/', include(mail_urls))
 
 ]

@@ -5,6 +5,21 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
+# for email setting
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_SERVER = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_FROM_ADDRESS = 'testadarsha5@gmail.com'
+EMAIL_PASSWORD = 'nepali**--te'
+EMAIL_ADDRESS = 'testadarsha5@gmail.com'
+EMAIL_ACTIVE_FIELD = 'is_active'
+EMAIL_PAGE_DOMAIN = 'http://127.0.0.1:8000/'
+EMAIL_MAIL_SUBJECT = 'Confirm your email'
+EMAIL_MAIL_HTML = 'testt.html'
+EMAIL_PAGE_TEMPLATE='Response.html'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -22,11 +37,13 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'django_email_verification',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',  # for static files
     'UserManagementSystem',  # app
+
 ]
 
 MIDDLEWARE = [
@@ -67,7 +84,7 @@ WSGI_APPLICATION = 'MeroAgro.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
