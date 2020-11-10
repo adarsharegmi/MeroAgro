@@ -2,10 +2,8 @@
 
 {% load static %}  {# for static files#}
 
-    {% block import %}
-    <link rel="stylesheet" href="{% static  'css/base.css' %}">
+{% block import %}
     <link rel="stylesheet" href="{% static  'css/signup.css' %}">
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 {% endblock import %}
 
@@ -75,8 +73,8 @@
     <div>
 
     </div>
-    {% endblock body %}
-    </body>
+{% endblock body %}
+</body>
 
 
 

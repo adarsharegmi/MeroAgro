@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block import %}
+    <link rel="stylesheet" href="{% static  'css/login.css' %}">
+    <meta name="google-signin-client_id"
+          content="16796605886-f3veg1ld4j6kqmbnub6ggsf6q21op47n.apps.googleusercontent.com">
+
+{% endblock import %}
+{% block body %}
+
+    <div id="login_div">
+        <img class="lazy" src="{% static 'images/unused/man2.png' %}">
+        <form id="login_form" action="login_user" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="email" name="useremail" class="form-control" placeholder="enter email address" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="userpassword" placeholder="enter password" class="form-control" required>
+            </div>
+
+            <input type="submit" name="login" value="Log in" class="form-control">
+        </form>
+
+        <p>Not a member? <a href="{% url 'register' %}">Join Now</a></p>
+        <p>OR</p>
+        {#    for google signu in  button#}
+        <div class="g-signin2 form-control" data-onsuccess="onSignIn"></div>
+    </div>
+
+    {#    for google sign in #}
+
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+        function onSignIn(googleUser) {
+            if (auth2.isSignedIn.get()) {
+                var profile = auth2.currentUser.get().getBasicProfile();
+                console.log('ID: ' + profile.getId());
+                console.log('Full Name: ' + profile.getName());
+                console.log('Given Name: ' + profile.getGivenName());
+                console.log('Family Name: ' + profile.getFamilyName());
+                console.log('Image URL: ' + profile.getImageUrl());
+                console.log('Email: ' + profile.getEmail());
+            }
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://yourbackend.example.com/tokensignin');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function () {
+                console.log('Signed in as: ' + xhr.responseText);
+            };
+            xhr.send('idtoken=' + id_token);
+
+        }
+    </script>
+
+    <a href="#" onclick="signOut();">Sign out</a>
+    <script>
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+        }
+    </script>
+
+{% endblock body %}

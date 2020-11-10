@@ -14,8 +14,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     {# for vue frontend      #}
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
     {% block import %}
     {% endblock import %}
+
 </head>
 
 <body>
@@ -43,22 +46,20 @@
             <a href="#" class="nav-item nav-link ml-5 active text-center"><i class="fas fa-cog"></i> <br>Setting</a>
 
 
-
-{#            {% if session.get('user') %}#}
+            {% if request.user.is_authenticated %}
                 {#  making the value available for html and js #}
-{#                {{ "true"|json_script:"loggedstatus" }}#}
-{#            {% endif %}#}
-
-            <a href='/register/' class="btn btn-info ml-5"><i class="fas fa-sign-out-alt"></i><br>[[ logged ]]</a>
-            {#                {% else %}#}
-            {#                    <button type="button" data-toggle="modal" data-target="#accountmodel"#}
-            {#                            class="btn btn-info ml-5">  {{ session.get('user') }} </button>#}
-            {#                {% endif %}#}
+{#                {{ true |json_script:"loggedstatus" }}#}
+                <a href='{% url 'signout' %}' class="btn btn-info ml-5"><i class="fas fa-sign-out-alt"></i><br>Sign out</a>
+            {% else %}
+                <a href='{% url 'login_user' %}' class="btn btn-info ml-5"><i class="fas fa-sign-out-alt"></i><br>Sign in</a>
+            {% endif %}
         </div>
     </div>
 </nav>
 
-{% block body %}{% endblock %}
+{% block body %}
+        {{ request.user.is_authenticated }}
+{% endblock %}
 {% block footer %}
 
 
@@ -67,14 +68,24 @@
 <script>
 
     {#var status = JSON.parse(document.getElementById('loggedstatus').textContent);#}
+    var status = "{{user.is_authenticated|yesno:"true,false"}}";
+    console.log("status is"+ status)
+    var app;
 
-    var app = new Vue({
+    app = new Vue({
         delimiters: ["[[", "]]"],
         el: '#header',
+        data: {},
 
-        data: {
-            logged: 'Login',
-        },
+        computed: {
+            logged: function () {
+                if (status === true) {
+                    return 'Sign out'
+                } else {
+                    return 'Login'
+                }
+            }
+        }
     });
 </script>
 

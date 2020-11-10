@@ -1,33 +1,39 @@
-@media screen  and (max-width:800px) {
-    body{
-        background-image: url("../images/bg3.jpg");
-    }
+@media screen and (max-width: 800px) {
+  body {
+    background-image: url("../images/bg3.jpg");
+  }
 }
 
-
-#row{    margin-top: 5vw; margin-left: 35vw; margin-bottom: 2vw;  background-color: #303038;}
+#row {
+  margin-top: 5vw;
+  margin-left: 35vw;
+  margin-bottom: 2vw;
+  background-color: #303038;
+}
 
 @media screen and (max-width: 800px) {
-#row{    margin-top: 5vw; margin-left: 30vw; margin-right: 20vw; margin-bottom: 2vw;  background-color: #303038;}
-
+  #row {
+    margin-top: 5vw;
+    margin-left: 30vw;
+    margin-right: 20vw;
+    margin-bottom: 2vw;
+    background-color: #303038;
+  }
 }
 
 #row .rowsub {
-    margin-left: 1.5vw;
-    margin-right: 1vw;
-    margin-top: 1.5vw;
+  margin-left: 1.5vw;
+  margin-right: 1vw;
+  margin-top: 1.5vw;
 }
 
-
-@media screen  and (max-width: 800px) {
-    #row .rowsub {
-        margin-left: 0.7vw;
-        margin-right: 0.5vw;
-        margin-top: 1vw;
-    }
-
-    .picture img{
-        visibility: visible;
-    }
+@media screen and (max-width: 800px) {
+  #row .rowsub {
+    margin-left: 0.7vw;
+    margin-right: 0.5vw;
+    margin-top: 1vw;
+  }
+  .picture img {
+    visibility: visible;
+  }
 }
-

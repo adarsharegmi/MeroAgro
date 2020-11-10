@@ -1,0 +1,35 @@
+@import 'variables';
+
+body{
+  background: $bg3;
+  background-size: cover;
+  color: white;
+}
+
+#login_div{
+  width: 33%;
+  margin: 100px 0 0 600px;
+  padding: 20px 20px 40px;
+  background-color: #ffffff;
+  color: #46434B;
+}
+
+#login_div img{
+  margin-left: 150px;
+}
+#login_form
+{
+  margin: 10px 15px 15px 15px;
+  background-color: white;
+}
+
+#login_div p
+{
+  margin-left: 20px;
+}
+#login_div a
+{
+  color: $background;
+  font-family:$font_mo;
+  font-style: oblique;
+}

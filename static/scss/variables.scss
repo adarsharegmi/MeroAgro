@@ -1,0 +1,12 @@
+$background : #40ac40;
+$border: #878b87;
+$font_size : 1.5vw;
+$white : #fff;
+$boxcolor : #386d15;
+$bg3 : url("../images/soil.jpg") no-repeat;
+$bga :url("../images/unused/a.jpg") no-repeat;
+
+$font_mo:"Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+// running the sass
+//python manage.py sass static/scss static/css
+// python manage.py collectstatic
