@@ -20,6 +20,10 @@ EMAIL_MAIL_SUBJECT = 'Confirm your email'
 EMAIL_MAIL_HTML = 'testt.html'
 EMAIL_PAGE_TEMPLATE='Response.html'
 
+#  for sending email
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'testadarsha5@gmail.com'
+EMAIL_HOST_PASSWORD = 'nepali**--te'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -56,6 +60,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# for email backend production
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 ROOT_URLCONF = 'MeroAgro.urls'
 

@@ -1,3 +1,5 @@
+from random import randint
+
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User as SUser
@@ -6,6 +8,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import render
 from .models import *
 from django_email_verification import sendConfirm
+from MeroAgro.settings import EMAIL_ADDRESS
 
 
 def create_user(request):
@@ -65,3 +68,23 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect(loginPage)
+
+
+def reset_password(request):
+    return render(request, 'reset/password_reset_form.html')
+
+
+from django.core.mail import send_mail
+
+
+def send_reset(request):
+    toemail = request.POST['uemail']
+    send_mail(
+        'Reset Password',
+        'Please enter this number ' + str(randint(000000, 999999)),
+        EMAIL_ADDRESS,
+        [toemail],
+        fail_silently=False)
+
+    return render(request,'reset/password_reset_confirm.html')
+

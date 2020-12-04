@@ -24,6 +24,7 @@ from django_email_verification import urls as mail_urls
 urlpatterns = [
     path('',base),
     path('user/', include("UserManagementSystem.urls")),
-    path('email/', include(mail_urls))
+    path('email/', include(mail_urls)),
+
 
 ]
