@@ -11,5 +11,9 @@ urlpatterns = [
     path('signout', logout_user, name='signout'),
     #     for email reset
     path('reset_password', reset_password, name='reset'),
-    path('reset',send_reset)
+    path('reset',send_reset),
+    path('profile',show_user, name='refshowme'),
+    path('save',update_user_details),
+    path('saveprofile',update_user_profile),
 ]
+

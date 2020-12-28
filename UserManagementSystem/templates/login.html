@@ -26,7 +26,11 @@
         <p>Not a member? <a href="{% url 'register' %}">Join Now</a></p>
         {#    for google signu in  button#}
 
+
+
         <div class="g-signin2 form-control" data-onsuccess="onSignIn"></div>
+        <button v-on:click = "displaynumbers">Click ME</button>
+
          <button onclick="signOut()">Sign Out</button>
 
 
@@ -62,6 +66,8 @@
                 console.log("User signed out")
             })
             }
+            // adding vue componene
+
     </script>
 
 {#    <a href="#" onclick="signOut();">Sign out</a>#}

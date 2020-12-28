@@ -24,7 +24,7 @@
 <body>
 <nav id="header" class="navbar navbar-expand-lg navbar-dark">
     <a href="#" class="navbar-brand">
-        <img src="/static/images/data.png" height="70" alt="Logo">
+        <img src="/static/images/logo1.png" height="80px" width="80px" alt="Logo">
     </a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
@@ -39,11 +39,11 @@
                 </div>
             </form>
             <a href="/" class="nav-item nav-link ml-5 active text-center"><i class="fas fa-igloo"></i> <br>Home</a>
-            <a href="#" class="nav-item nav-link ml-5 active text-center"><i class="fas fa-user"></i>
+            <a href="{% url 'refshowme' %}" class="nav-item nav-link ml-4 active text-center"><i class="fas fa-user"></i>
                 <br>Profile</a>
-            <a href="#" class="nav-item nav-link ml-5 active text-center"><i class="fas fa-bell"></i>
+            <a href="#" class="nav-item nav-link ml-4 active text-center"><i class="fas fa-bell"></i>
                 <br>Notification</a>
-            <a href="#" class="nav-item nav-link ml-5 active text-center"><i class="fas fa-cog"></i> <br>Setting</a>
+            <a href="" class="nav-item nav-link ml-4 active text-center"><i class="fas fa-cog"></i> <br>Setting</a>
 
 
             {% if request.user.is_authenticated %}
@@ -58,7 +58,7 @@
 </nav>
 
 {% block body %}
-        {{ request.user.is_authenticated }}
+{#        {{ request.user.is_authenticated }}#}
 {% endblock %}
 {% block footer %}
 

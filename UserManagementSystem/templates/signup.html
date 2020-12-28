@@ -25,7 +25,7 @@
 
                 <div class="col-md-6" id="row">
                     <div class="rowsub">
-                        <form class="p-4 text-white" method="post" action="signup" autocomplete="off">
+                        <form class="p-4 text-white" method="post" action="signup" autocomplete="off" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="name"><i class="fas fa-user"></i> UserName</label>

@@ -4,7 +4,9 @@
     margin: 0px;
     padding: 0px;
 } *
+
 #header {
+    max-width: 100%;
     border-radius: 0.2vw;
     border-color: $border;
     background-color: $background;
@@ -20,7 +22,7 @@
 }
 .search-box {
     position: relative;
-    margin-left: 5vw;
+    margin-left: $left;
     margin-right: 8vw;
 }
 
