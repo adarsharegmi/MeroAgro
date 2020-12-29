@@ -9,9 +9,13 @@ urlpatterns = [
     path('login', loginPage, name='login_user'),
     path('login_user', login_user),
     path('signout', logout_user, name='signout'),
+
     #     for email reset
     path('reset_password', reset_password, name='reset'),
     path('reset',send_reset),
+    path('confirm',check),
+    path('update_password',update_password),
+    #  updating the data
     path('profile',show_user, name='refshowme'),
     path('save',update_user_details),
     path('saveprofile',update_user_profile),

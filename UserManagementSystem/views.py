@@ -12,6 +12,8 @@ from django_email_verification import sendConfirm
 from MeroAgro.settings import EMAIL_ADDRESS
 import json
 
+cross = 0
+
 
 def create_user(request):
     return render(request, 'signup.html')
@@ -60,9 +62,7 @@ def loginPage(request):
 
 def login_user(request):
     if request.method == 'POST':
-
         useremail = request.POST['useremail']
-
         user = authenticate(username=useremail, password=request.POST['userpassword'])
 
         if user is not None:
@@ -93,15 +93,44 @@ from django.core.mail import send_mail
 
 # method to reset the password of user
 def send_reset(request):
+    global cross
+    cross = randint(000000, 999999)
     toemail = request.POST['uemail']
-    send_mail(
-        'Reset Password',
-        'Please enter this number ' + str(randint(000000, 999999)),
-        EMAIL_ADDRESS,
-        [toemail],
-        fail_silently=False)
+    request.session['email'] = toemail
 
-    return render(request, 'reset/password_reset_confirm.html')
+    context = {"cross":cross}
+
+    try:
+        user = User.objects.get(user_email=toemail)
+        send_mail('Reset Password', 'Please enter this number ' + str(cross), EMAIL_ADDRESS, [toemail],
+                  fail_silently=False)
+        return render(request, 'reset/password_reset_confirm.html')
+    except Exception as e:
+        print("error sending mail")
+        print(e)
+
+    return render(request, 'reset/password_reset_form.html')
+
+
+def check(request):
+    print(cross)
+
+    if int(request.POST['reset']) == cross:
+        return render(request, "reset/password_reset_done.html")
+    else:
+        return render(request, "reset/password_reset_confirm.html")
+
+
+def update_password(request):
+    if request.method == 'POST':
+        password = request.POST['upassword']
+        email = request.session['email']
+        user = User.objects.get(user_email=email)
+        user.user_password = password
+        su = SUser.objects.get(username=email)
+        su.set_password(password)
+        su.save()
+        return render(request, "login.html")
 
 
 def show_user(request):
@@ -115,8 +144,9 @@ def show_user(request):
     context = {}
     try:
         image = Images.objects.get(id=user)
-        data = {"address": address, "email": useremail, "password": password, "username":username, "profileimage": image.profile_picture.url}
-    except :
+        data = {"address": address, "email": useremail, "password": password, "username": username,
+                "profileimage": image.profile_picture.url}
+    except:
         data = {"address": address, "email": useremail, "password": password, "username": username,
                 "profileimage": "/default/pp.png"}
 
