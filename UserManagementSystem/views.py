@@ -44,12 +44,12 @@ def register_user(request):
 
         user_obj2 = SUser.objects.create_user(get_email, get_email, get_password)
 
-        image = Images(name=get_username)
-        image.save()
+        image = Images(name=user_obj)
+
         verifyalt(request, user_obj2)
         user_obj.save()
         user_obj2.save()
-
+        image.save()
         print("Account completion")
         return HttpResponse("Check your email and verify your account... Thank you ")
     else:
@@ -71,7 +71,7 @@ def login_user(request):
             request.session['username'] = User.objects.get(user_email=useremail).user_id
 
             if request.user.is_authenticated:
-                return render(request, 'base.html')
+                return render(request, 'homepage.html')
         else:
             print("password error")
             return HttpResponse("error passowrd")
@@ -140,7 +140,6 @@ def show_user(request):
     password = u.user_password
     useremail = u.user_email
     username = request.session['username']
-
     context = {}
     try:
         image = Images.objects.get(id=user)
@@ -158,8 +157,8 @@ def show_user(request):
 
 def update_user_details(request):
     if request.method == 'POST':
-        username = request.session['username']
-        update(request, 1, username)
+        user_id = request.session['id']
+        update(request, 1, user_id)
         return show_user(request)
     else:
         return show_user(request)
@@ -167,20 +166,20 @@ def update_user_details(request):
 
 def update_user_profile(request):
     if request.method == 'POST' and request.FILES['profilepicture']:
-        name = request.session['username']
-        update(request, 2, name)
+        user_id = request.session['id']
+        update(request, 2, user_id)
         return show_user(request)
     else:
         return HttpResponse("userdetails.html")
 
 
-def update(request, n, username):
-    print(username)
+def update(request, n, user_id):
+    print(user_id)
     fs = FileSystemStorage()
-    img_obj = Images.objects.get(name=username)
+    img_obj = Images.objects.get(name=user_id)
 
     if n == 1:
-        user_obj = User.objects.get(user_id=username)
+        user_obj = User.objects.get(id=user_id)
         # update user details
         get_username = request.POST['username']
         img_obj.name = request.POST['username']

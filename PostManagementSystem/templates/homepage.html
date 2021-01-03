@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block import %}
+    <link rel="stylesheet" href="{% static  'css/homepage.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+{% endblock %}
+{% block body %}
+
+    <div class="upload_class" id="upload_form">
+        <form class="upload_form" method="post" enctype="multipart/form-data" action="post">
+            {% csrf_token %}
+            <div class="row">
+                <img src="{% static 'images/user.png' %}" width="55px" height="70px" id="img">
+                <textarea id="uploadingtext" type="text" placeholder="Enter your Text" class="form-control"
+                          name="text"></textarea>
+                <br>
+            </div>
+            <select name="type" id="tag" required>
+                <option value="Sell">Sell</option>
+                <option value="Buy">Buy</option>
+                <option value="Ask">Ask</option>
+                <option value="Knowledge">Knowledge</option>
+            </select>
+            <br>
+
+            <div class="row" id="roww">
+                <div v-for="n in count">
+                    <input type="file" name="profilepicture" id="inputimage"
+                           accept="image/gif, image/jpeg, image/png" hidden @change="onFileChange">
+                    <label for="inputimage"><img src="{% static "images/uploadpic.png" %}" width="40px"
+                                                 height="40px"> Choose image</label>
+                    <div id="preview">
+                        <img v-if="url" :src="url" width="90px" height="90px"/>
+                    </div>
+
+                </div>
+                <input type="button" class="AddMore" value="Add More &#9547" v-on:click="count+=1">
+            </div>
+            <br>
+            <input type="submit" value="Upload" class="AddMore" id="uploadingbtn">
+        </form>
+    </div>
+    {#    Dynamic data showing#}
+
+    <div class="show">
+        {% for post in posts %}
+            <div id="show_post">
+
+                <div class="data">
+                    <div class="container">
+                        <div class="row" id="details">
+
+                            <div class="float-left row">
+                                <img src="{{ pp }}" width="90px" height="40px" class="img"><br>
+                                <p>Adarsha Regmi</p>
+                            </div>
+                            <div class="float-right" style="margin-left: 40vw;" id="ModalId">
+                                <i style="color: #46434B;" onclick="hide()" class="fas fa-ellipsis-h"></i>
+
+                                <div id="myModal">
+                                    <form action="/delete/{{ post.id }}" method="post">
+                                        {% csrf_token %}
+{#                                        <p style="color: #40ac40;">{{ post.id }}</p>#}
+                                        <input type="submit" class="btn btn-danger" value="Delete">
+                                    </form>
+                                    <form action=" edit/{{ post_id }}/" method="post">
+                                        {% csrf_token %}
+                                        <input type="button" class="btn btn-primary" value="Close">
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="content">
+                        {{ post.post_details }}<br>
+                        <img src="{{ post.uploaded_picture }}" class="img">
+                    </div>
+                    <div class="like-container">
+                        <div class="row">
+                            <div class="col-sm">
+                                Like this <i class="fas fa-thumbs-up"></i>
+                            </div>
+                            <div class="col-sm">
+                                Not interested <i class="fas fa-thumbs-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block script %}
+
+    <script type='text/javascript'>
+        var post_d = {{ post_data|safe }};
+    </script>
+
+    <script>
+        var app = new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#upload_form',
+            data: {
+                count: 1,
+                url: null,
+            },
+            methods: {
+                onFileChange(e) {
+                    const file = e.target.files[0];
+                    this.url = URL.createObjectURL(file);
+                },
+            },
+        });
+    </script>
+
+    <script>
+        function show() {
+            var obj = document.getElementById("myModal");
+            obj.style.display = "block";
+        }
+
+        function hide() {
+            var obj = document.getElementById("myModal");
+            obj.style.display = "none";
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,165 @@
+@import 'variables';
+
+body {
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.upload_class {
+  background-color: $background;
+  padding: 1vw;
+}
+
+.upload_form {
+  padding: 1vw;
+  align-content: center;
+  align-items: center;
+  margin-left: 30vw;
+  width: 40%;
+  border-width: 2px;
+  border-style: solid;
+  border-color: white;
+  border-radius: 5px;
+}
+
+#details {
+  margin-left: 1px;
+}
+
+.upload_form #uploadingtext {
+  height: 7vw;
+  width: 30vw;
+  margin-left: 2vw;
+}
+
+.upload_form #img {
+  border-radius: 50%;
+  margin-top: 5px;
+}
+
+#roww{
+  padding: 1vw;
+}
+#tag {
+  margin-top: 2vw;
+  background-color: #717171;
+  height: 3vw;
+  color: white;
+  width: 36vw;
+}
+
+.AddMore {
+  height: 3vw;
+  width: 20%;
+  border-width: 0px;
+  border-color: #40ac40;
+  background-color: white;
+  color: #242424;
+  font-family: "Britannic Bold";
+  margin-top: 4vw;
+}
+
+#preview img {
+  max-width: 100%;
+  max-height: 500px;
+  margin-left: 1vw;
+}
+
+#preview {
+  margin-right: 3vw;
+  background: $bg4;
+  background-size: cover;
+  border-radius: 3px;
+  border-color: #46434B;
+  border-width: 2px;
+  width: 80%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#uploadingbtn {
+  background-color: #0f4fe3;
+  color: white;
+  border-radius: 10px;
+  width: 250px;
+  border-color: chocolate;
+  margin-top: 1vw;
+  width: 80%;
+  margin-left: 10%;
+}
+
+#uploadingbtn:hover {
+  background-color: #1255ef;
+  color: whitesmoke;
+}
+
+.show {
+  cursor: pointer;
+  background-color: #fff;
+  color: white;
+}
+
+#show_post {
+  border-style: solid;
+  border-color: #ffffff;
+  border-width: 3px;
+  height: 40vw;
+  width: 60vw;
+  margin-left: 20vw;
+  background-color: $background;
+}
+
+#show_post .data {
+  margin-left: 4vw;
+}
+
+#show_post .img:first-child {
+  border-radius: 50%;
+  width: 2vw;
+  margin-right: 15px;
+}
+
+#show_post p {
+  padding: 10px;
+}
+
+#content {
+  font-family: sans-serif;
+  margin-left: 5vw;
+  width: 40vw;
+}
+
+#content img {
+  padding: 20px;
+  width: 40vw;
+  height: 20vw;
+
+}
+
+.like-container {
+  margin-top: 2px;
+  padding: 1vw;
+  margin-right: 3vw;
+  text-align: center;
+}
+.like-container div div{
+  padding:10px;
+}
+.like-container div div:hover {
+  background-color: #63acb3;
+  border-radius: 5px;
+}
+
+//for modal
+#myModal {
+  right: 8vw;
+  width: 8vw;
+  position: absolute;
+  z-index: 1;
+  background: #0a0805;
+}
+#myModal form{
+  padding: 1vw;
+  margin-left: 1vw;
+}

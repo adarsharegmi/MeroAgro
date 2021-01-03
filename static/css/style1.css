@@ -1,0 +1,48 @@
+#content {
+  width: 90%;
+  height: 50vw;
+  padding: 5vw;
+  border-radius: 10%;
+  border-style: solid;
+  border-width: 5px;
+  border-color: #40ac40;
+}
+
+#sub-container2 {
+  margin-top: 1vw;
+  width: 50%;
+  margin-bottom: 5vw;
+}
+
+#sub-container2 h2 {
+  color: #40ac40;
+  font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+}
+
+#sub-container2 input {
+  color: white;
+  background-color: #0b800b;
+  border-color: white;
+  border-radius: 10px;
+  height: 4vw;
+  width: 8vw;
+  margin: 1vw;
+}
+
+#sub-container2 input:first-child {
+  margin-left: 6vw;
+}
+
+#sub-container2 input:hover {
+  background-color: #45bd45;
+}
+
+.sub-container {
+  margin: 200px auto auto;
+  width: 10vw;
+  font-size: large;
+}
+
+.sub-container h1 {
+  color: #0b800b;
+}

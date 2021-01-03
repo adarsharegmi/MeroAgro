@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',  # for static files
     'django_sass', # scss
     'UserManagementSystem',  # app
+    'PostManagementSystem',
 
 ]
 
@@ -69,7 +70,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': ['MeroAgro/templates',
-                 'UserManagementSystem/templates'],
+                 'UserManagementSystem/templates',
+                 'PostManagementSystem/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

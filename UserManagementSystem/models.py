@@ -39,5 +39,5 @@ class OverwriteStorage(FileSystemStorage):
 #         models for storing the images
 
 class Images(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.ForeignKey(User,on_delete=models.CASCADE)
     profile_picture = models.ImageField(upload_to='user/image_profile', storage=OverwriteStorage)

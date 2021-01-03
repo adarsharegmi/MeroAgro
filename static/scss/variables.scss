@@ -7,9 +7,12 @@ $borderuser:5px groove #082C84;
 $bgcolor : #89a5b3;
 $boxcolor : #386d15;
 $bg3 : url("../images/soil.jpg") no-repeat;
+$bg4 : url("../images/load.png") no-repeat;
 $bga :url("../images/unused/a.jpg") no-repeat;
 $font_agency : "Agency FB";
 $font_mo:"Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+$set1:#575a6c;
+$set2: #5a5a5a;
 // running the sass
 //python manage.py sass static/scss static/css
 // python manage.py collectstatic

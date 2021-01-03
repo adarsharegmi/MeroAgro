@@ -1,0 +1,29 @@
+{% extends 'basenew.html' %}
+{% load static %}
+{% block import %}
+    <link rel="stylesheet" href="{% static  'css/style1.css' %}">
+{% endblock %}
+{% block body %}
+    <div class="container" id="content">
+
+        <div class="float-right">
+            <iframe width="420" height="315" src="https://www.youtube.com/embed/YDcakKDJWv0" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+        <div class="float-left" id="sub-container2">
+            <h2>Connecting the farmers and consumers together</h2>
+            <br>
+            <p>We aim to connect local farmer with the marketing manager around the country and then upload the
+                daata</p><br>
+            <h5>हाम्रो लक्ष्य किसान र बजारहरू एक साथ जोडिएको र उचित देशको प्रबर्धन गर्ने हो</h5>
+            <form>
+                <input type="submit" onsubmit="/signup" value="Join now">
+                <input type="submit" onsubmit="/signin" value="Sign in">
+            </form>
+        </div>
+        <div class="sub-container">
+            <h1>000000</h1> <h5>people have joined and benefited </h5>
+        </div>
+    </div>
+{% endblock %}

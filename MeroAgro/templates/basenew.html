@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load  static %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Nepal Agro</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static  'css/base.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    {% block import %}
+    {% endblock %}
+</head>
+
+<body>
+<nav id="header" class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <div class="float-left">
+            <a href="#" class="navbar-brand">
+                <img src="/static/images/logo1.png" height="80px" width="80px" alt="Logo">
+            </a>
+        </div>
+        <div class="float-right">
+            <a href='{% url 'login_user' %}' class="btn btn-info right"><i class="fas fa-sign-out-alt"></i><br>Sign
+                In</a>
+        </div>
+    </div>
+</nav>
+{% block body %}{% endblock %}
+</body>
+
+
+</html>
