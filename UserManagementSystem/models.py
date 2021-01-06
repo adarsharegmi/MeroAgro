@@ -16,6 +16,8 @@ class User(models.Model):
     user_password = models.CharField(max_length=200)
     user_type = models.CharField(max_length=20)
 
+    def profile_pic(self):
+        return self.images.first()
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -36,8 +38,9 @@ class OverwriteStorage(FileSystemStorage):
             os.remove(os.path.join(settings.MEDIA_ROOT, name))
         return name
 
+
 #         models for storing the images
 
 class Images(models.Model):
-    name = models.ForeignKey(User,on_delete=models.CASCADE)
+    name = models.ForeignKey(User, on_delete=models.CASCADE, related_name='images')
     profile_picture = models.ImageField(upload_to='user/image_profile', storage=OverwriteStorage)

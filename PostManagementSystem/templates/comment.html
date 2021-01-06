@@ -1,0 +1,37 @@
+<div class="comment">
+    <div class="show-comment">
+
+        <table class="table">
+            {% for comment in comments %}
+                <tbody>
+                {% if comment.post_id == post.id %}
+                    <tr>
+                        <td>
+                            <img src="{{ comment.user.profile_pic.profile_picture }}" width="50px" height="40px"
+                                 style="border-radius: 50%;">
+                        </td>
+                        <td>
+                            {{ comment.text }}
+                        </td>
+
+                    </tr>
+                {% endif %}
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
+    <div id="comment-section">
+        <form method="POST" class="form-inline" action="comment_save/{{ post.id }}">
+            {% csrf_token %}
+
+            <div class="row">
+                <div class="col-8">
+                    <input type="text" class="form-control" placeholder="Enter your comment here." name="comment">
+                </div>
+                <div class="col-4">
+                    <input type="submit" style="background-color: #5a5a5a; color: #31f3dc;" class="form-control" value="Comment">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

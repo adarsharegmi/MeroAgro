@@ -56,8 +56,8 @@
                         <div class="row" id="details">
 
                             <div class="float-left row">
-                                <img src="{{ pp }}" width="90px" height="40px" class="img"><br>
-                                <p>Adarsha Regmi</p>
+                                <img src="{{ post.user.profile_pic.profile_picture }}" width="90px" height="40px" class="img"><br>
+                                <p>{{ post.user.user_id }}</p>
                             </div>
                             <div class="float-right" style="margin-left: 40vw;" id="ModalId">
                                 <i style="color: #46434B;" onclick="hide()" class="fas fa-ellipsis-h"></i>
@@ -65,7 +65,7 @@
                                 <div id="myModal">
                                     <form action="/delete/{{ post.id }}" method="post">
                                         {% csrf_token %}
-{#                                        <p style="color: #40ac40;">{{ post.id }}</p>#}
+                                        {#                                        <p style="color: #40ac40;">{{ post.id }}</p>#}
                                         <input type="submit" class="btn btn-danger" value="Delete">
                                     </form>
                                     <form action=" edit/{{ post_id }}/" method="post">
@@ -90,11 +90,19 @@
                                 Not interested <i class="fas fa-thumbs-down"></i>
                             </div>
                         </div>
+
+                        {% include 'comment.html' %}
+
+
                     </div>
                 </div>
+
+                </div>
+            </div>
             </div>
         {% endfor %}
     </div>
+
 {% endblock %}
 
 {% block script %}
@@ -110,6 +118,7 @@
             data: {
                 count: 1,
                 url: null,
+                image_url: null,
             },
             methods: {
                 onFileChange(e) {

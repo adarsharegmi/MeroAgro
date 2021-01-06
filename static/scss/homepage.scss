@@ -36,9 +36,10 @@ body {
   margin-top: 5px;
 }
 
-#roww{
+#roww {
   padding: 1vw;
 }
+
 #tag {
   margin-top: 2vw;
   background-color: #717171;
@@ -104,7 +105,6 @@ body {
   border-style: solid;
   border-color: #ffffff;
   border-width: 3px;
-  height: 40vw;
   width: 60vw;
   margin-left: 20vw;
   background-color: $background;
@@ -143,10 +143,12 @@ body {
   margin-right: 3vw;
   text-align: center;
 }
-.like-container div div{
-  padding:10px;
+
+.like-container div div {
+  padding: 10px;
 }
-.like-container div div:hover {
+
+.like-container div .col-sm:hover {
   background-color: #63acb3;
   border-radius: 5px;
 }
@@ -159,7 +161,23 @@ body {
   z-index: 1;
   background: #0a0805;
 }
-#myModal form{
+
+#myModal form {
   padding: 1vw;
   margin-left: 1vw;
+}
+
+// for comment section
+.comment {
+  padding: 1vw;
+  margin-left: 10vw;
+  width: 60%;
+  color: black;
+  background-color: #5380ef;
+}
+
+#comment-section {
+  width: 90%;
+  color: #46434B;
+  margin: auto;
 }

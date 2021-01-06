@@ -74,7 +74,7 @@ def login_user(request):
                 return render(request, 'homepage.html')
         else:
             print("password error")
-            return HttpResponse("error passowrd")
+            return HttpResponse("error password")
     else:
         return render(request, 'login.html')
 
