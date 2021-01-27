@@ -22,43 +22,60 @@
 </head>
 
 <body>
-<nav id="header" class="navbar navbar-expand-lg navbar-dark">
-    <a href="#" class="navbar-brand">
-        <img src="/static/images/logo1.png" height="80px" width="80px" alt="Logo">
-    </a>
-    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark" id="header">
+        <a href="#" class="navbar-brand">
+            <img class="logo" src="/static/images/logo1.png" alt="Logo">
+        </a>
 
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <div class="navbar-nav ml-4">
-            <form class="navbar-form form-inline" id="navbar">
-                <div class="input-group search-box">
-                    <input type="text" id="search" class="form-control" placeholder="Search here...">
-                    <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+                <div class="container2" id="navbar-container">
+                    <div class="row">
+                        <div class="col">
+                            <form class="navbar-form form-inline" id="navbar">
+                                <div class="input-group search-box">
+                                    <input type="text" id="search" class="form-control" placeholder="Search here...">
+                                    <span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col row">
+                            <a href="/" class="nav-item nav-link ml-5 active text-center"><i class="fas fa-igloo"></i>
+                                <br>Home</a>
+                            <a href="{% url 'profile' %}" class="nav-item nav-link ml-4 active text-center"><i
+                                    class="fas fa-user"></i>
+                                <br>Profile</a>
+                            <a href="#" class="nav-item nav-link ml-4 active text-center"><i class="fas fa-bell"></i>
+                                <br>Notification</a>
+                            <a href="{% url 'refshowme' %}" class="nav-item nav-link ml-4 active text-center"><i
+                                    class="fas fa-cog"></i> <br>Setting</a>
+
+
+                            {% if request.user.is_authenticated %}
+                                {#  making the value available for html and js #}
+                                {#                {{ true |json_script:"loggedstatus" }}#}
+                                <a href='{% url 'signout' %}' class="btn btn-info ml-5"><i
+                                        class="fas fa-sign-out-alt"></i><br>Sign
+                                    out</a>
+                            {% else %}
+                                <a href='{% url 'login_user' %}' class="btn btn-info ml-5"><i
+                                        class="fas fa-sign-out-alt"></i><br>Sign
+                                    in</a>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-            </form>
-            <a href="/" class="nav-item nav-link ml-5 active text-center"><i class="fas fa-igloo"></i> <br>Home</a>
-            <a href="{% url 'refshowme' %}" class="nav-item nav-link ml-4 active text-center"><i class="fas fa-user"></i>
-                <br>Profile</a>
-            <a href="#" class="nav-item nav-link ml-4 active text-center"><i class="fas fa-bell"></i>
-                <br>Notification</a>
-            <a href="" class="nav-item nav-link ml-4 active text-center"><i class="fas fa-cog"></i> <br>Setting</a>
-
-
-            {% if request.user.is_authenticated %}
-                {#  making the value available for html and js #}
-{#                {{ true |json_script:"loggedstatus" }}#}
-                <a href='{% url 'signout' %}' class="btn btn-info ml-5"><i class="fas fa-sign-out-alt"></i><br>Sign out</a>
-            {% else %}
-                <a href='{% url 'login_user' %}' class="btn btn-info ml-5"><i class="fas fa-sign-out-alt"></i><br>Sign in</a>
-            {% endif %}
+            </div>
         </div>
-    </div>
-</nav>
-
+    </nav>
+</header>
 {% block body %}
-{#        {{ request.user.is_authenticated }}#}
+    {#        {{ request.user.is_authenticated }}#}
 {% endblock %}
 {% block footer %}
 
@@ -69,7 +86,7 @@
 
     {#var status = JSON.parse(document.getElementById('loggedstatus').textContent);#}
     var status = "{{user.is_authenticated|yesno:"true,false"}}";
-    console.log("status is"+ status)
+    console.log("status is" + status)
     var app;
 
     app = new Vue({

@@ -1,5 +1,5 @@
-body {
-  background: rgba(255, 255, 255, 0.88);
+html {
+  scroll-behavior: smooth;
 }
 
 .upload_class {
@@ -17,10 +17,6 @@ body {
   border-style: solid;
   border-color: white;
   border-radius: 5px;
-}
-
-#details {
-  margin-left: 1px;
 }
 
 .upload_form #uploadingtext {
@@ -93,6 +89,11 @@ body {
   color: whitesmoke;
 }
 
+#post-container {
+  color: white;
+  padding-left: 20vw;
+}
+
 .show {
   cursor: pointer;
   background-color: #fff;
@@ -104,7 +105,7 @@ body {
   border-color: #ffffff;
   border-width: 3px;
   width: 60vw;
-  margin-left: 20vw;
+  align-items: center;
   background-color: #40ac40;
 }
 
@@ -112,10 +113,22 @@ body {
   margin-left: 4vw;
 }
 
+.data .row {
+  max-width: 100%;
+}
+
+.data .row p {
+  font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+  font-size: 1.5vw;
+  font-style: normal;
+}
+
 #show_post .img:first-child {
   border-radius: 50%;
-  width: 2vw;
+  width: 5vw;
+  height: 4vw;
   margin-right: 15px;
+  margin-top: 5px;
 }
 
 #show_post p {
@@ -141,6 +154,15 @@ body {
   text-align: center;
 }
 
+.like-container a {
+  color: white;
+}
+
+.like-container a:hover {
+  font-style: normal;
+  color: white;
+}
+
 .like-container div div {
   padding: 10px;
 }
@@ -150,15 +172,36 @@ body {
   border-radius: 5px;
 }
 
-#myModal {
-  right: 8vw;
-  width: 8vw;
+.Load-comments-div {
+  height: 1vw;
+  padding: 2px;
+}
+
+.Load-comments-div div:hover {
+  background-color: #98b1ef;
+  text-decoration: none;
+  border-radius: 3px;
+}
+
+.Load-comments-div div a:hover {
+  text-decoration: none;
+}
+
+.myModal {
+  right: 4vw;
+  width: 13vw;
   position: absolute;
   z-index: 1;
   background: #0a0805;
+  display: none;
+  padding: 2vw;
 }
 
-#myModal form {
+.myModal input {
+  margin: 1vw;
+}
+
+.myModal form {
   padding: 1vw;
   margin-left: 1vw;
 }

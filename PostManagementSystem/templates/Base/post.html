@@ -1,0 +1,86 @@
+<div class="album py-5">
+    <div id="post-container">
+        <div class="infinite-container">
+            {% for post in posts %}
+                <div class="infinite-item">
+                    <div id="show_post">
+                        <div class="data">
+                            <div class="row">
+                                <div class="col-1">
+                                    <img src="{{ post.user.profile_pic.profile_picture }}" width="90px"
+                                         height="40px"
+                                         class="img">
+
+                                </div>
+                            <div class="col-4"> <p>{{ post.user.user_id }}</p></div>
+                                <div class="col-7">
+                                    {% if post.user.id == user %}
+                                        <div class="float-right" style="margin-left: 40vw;" class="ModalId">
+                                            <a style="color: #46434B;" class="showpost" href="#post{{ post.id }}"><i
+                                                    class="fas fa-ellipsis-h"></i></a>
+                                            <div class="myModal" id="post{{ post.id }}">
+                                                <a class="hidepost" href="#post{{ post.id }}"
+                                                   style="color: white; font-size: 2vw;">&times;</a>
+                                                <form action="/delete/{{ post.id }}" method="post">
+                                                    {% csrf_token %}
+                                                    {#                                        <p style="color: #40ac40;">{{ post.id }}</p>#}
+                                                    <input type="submit" class="btn btn-danger" value="Delete">
+                                                </form>
+                                                <form action=" edit/{{ post_id }}/" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="button" class="btn btn-primary" value="Close">
+                                                </form>
+
+                                            </div>
+
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div id="content">
+                                {{ post.post_details }}<br>
+                                <img src="{{ post.uploaded_picture }}" class="img">
+                            </div>
+                            <div class="like-container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <a class="likebutton" id="like{{ post.id }}" href="#"
+                                           data-catid="{{ post.id }}">Like This <i class="fas fa-thumbs-up"></i></a>
+                                        <p id="message{{ post.id }}" style="display: none;">Liked</p>
+                                    </div>
+                                    <div class="col-sm">
+                                        <a class="Dislikebutton" id="dislike{{ post.id }}" href="#"
+                                           data-catid="{{ post.id }}">DisLike This <i
+                                                class="fas fa-thumbs-down"></i></a>
+                                        <p id="message2{{ post.id }}" style="display: none;">Disliked</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                {% include 'comment.html' %}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+
+        {#  For infinite scroll  #}
+        <div>
+            {% if posts.has_next %}
+                <a class="infinite-more-link" href="?page={{ posts.next_page_number }}"></a>
+            {% endif %}
+
+        </div>
+
+        <div class="d-flex justify-content-center" style="display:none;">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'script.html' %}

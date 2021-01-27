@@ -2,13 +2,9 @@
 {% load static %}
 
 {% block import %}
-     <link rel="stylesheet" href="{% static  'css/profile.css' %}">
+    <link rel="stylesheet" href="{% static  'css/profile.css' %}">
     {#    for vue#}
-    {#    load vue from CDN#}
-
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    {#  Render  json data as js  #}
-
 {% endblock import %}
 
 {% block body %}
@@ -29,26 +25,31 @@
                         <div class="rowsub" style="margin-bottom: 2vw;">
                             <img v-bind:src="profile" width="100%" height="auto">
                         </div>
-                        <div class="rowsub">
+                        <div class="rowsub" id="preview-form">
                             <input type="file" name="profilepicture" id="inputimage"
-                                   accept="image/gif, image/jpeg, image/png" class="form-control" hidden>
-                            <label for="inputimage"><img src="{% static "images/upload.png" %}" width="50px"
-                                                         height="50px"> Choose image</label>
+                                   accept="image/gif, image/jpeg, image/png" class="form-control" hidden
+                                   @change="onFileChange">
+                            <label for="inputimage"><img src="{% static "images/uploadpic.png" %}" width="50px"
+                                                         height="50px"> Change image</label>
+                            <div id="preview">
+                                <img v-if="url" :src="url" style="background-color: #46434B; max-width: 100%;top: 100px;">
+                            </div>
                         </div>
-                        <input type="submit" class="btn btn-primary" value="Change profile picture">
+                        <input v-if="url" type="submit" class="btn btn-primary" value="Save new profile picture">
                     </div>
 
                 </form>
             </div>
 
             <div class="col-5">
-                <form enctype="multipart/form-data" method="post" action="save" class="left_form" >
+                <form enctype="multipart/form-data" method="post" action="save" class="left_form">
                     {% csrf_token %}
                     <label for="Name"></label>
                     <input class="form-control" name="username" v-model="name">
                     <br>
                     <input class="form-control" name="useremail" v-model="email">
-                    <label for="email" style="color: red;">**This email is not used for login Explore below for more....</label>
+                    <label for="email" style="color: red;">**This email is not used for login Explore below for
+                        more....</label>
                     <br>
                     <label for="Place"></label>
                     <input class="form-control" name="useraddress" v-model="address">
@@ -82,9 +83,15 @@
                 email: user_d['email'],
                 address: user_d['address'],
                 password: user_d['password'],
-                profile: user_d['profileimage']
+                profile: user_d['profileimage'],
+                url:null,
             },
-            methods: {}
+            methods: {
+                onFileChange(e) {
+                const file = e.target.files[0];
+                this.url = URL.createObjectURL(file);
+            },}
         });
     </script>
+
 {% endblock script %}

@@ -1,69 +1,81 @@
 @import 'variables';
 
 * {
-    margin: 0px;
-    padding: 0px;
-} *
+  margin: 0px;
+  padding: 0px;
+}
 
 #header {
-    max-width: 100%;
-    border-radius: 0.2vw;
-    border-color: $border;
-    background-color: $background;
-    border-style: none none solid none;
+  max-width: 100%;
+  border-radius: 0.2vw;
+  border-color: $border;
+  background-color: $background;
+  border-style: none none solid none;
 }
 
 .navbar i {
-    font-size: $font_size;
+  font-size: $font_size;
 }
 
-.navbar a{
-    font-size: 1.2vw;
+.navbar a {
+  font-size: 1.2vw;
 }
+
 .search-box {
-    position: relative;
-    margin-left: $left;
-    margin-right: 8vw;
+  position: relative;
+  margin-left: 2vw;
+  margin-right: 4vw;
 }
 
 .search-box input {
-    padding-right: 3.5vw;
-    min-height: 38px;
-    border: none;
-    background: #faf7fd;
-    border-radius: 4px;
+  padding-right: 3.5vw;
+  min-height: 38px;
+  border: none;
+  background: #faf7fd;
+  border-radius: 4px;
 }
 
 .search-box input:focus {
-    background: $white;
-    box-shadow: none;
+  background: $white;
+  box-shadow: none;
 }
 
 .search-box .input-group-addon {
-    min-width: 35px;
-    border: none;
-    background: transparent;
-    position: absolute;
-    right: 0;
-    z-index: 9;
-    padding: 10px 7px;
-    height: 100%;
+  min-width: 35px;
+  border: none;
+  background: transparent;
+  position: absolute;
+  right: 0;
+  z-index: 9;
+  padding: 10px 7px;
+  height: 100%;
 }
 
 .search-box i {
-    color: $boxcolor;
-    font-size: $font_size;
+  color: $boxcolor;
+  font-size: $font_size;
 }
 
-#search{
-    width: 35vw;
+#search {
+  width: 35vw;
 }
 
 .register-form input {
-    height: 4vw;
-    max-width: 100%;
-}
-.register-form, .register-form select, .register-form option, .register-form input{
-    font-size: $font_size;
+  height: 4vw;
+  max-width: 100%;
 }
 
+.register-form, .register-form select, .register-form option, .register-form input {
+  font-size: $font_size;
+}
+
+
+.container2 {
+  padding: 2vw;
+}
+
+.logo {
+  width: 5vw;
+  height: 5vw;
+  margin-top: -1vw;
+}

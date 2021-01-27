@@ -29,3 +29,8 @@ class Comment(models.Model):
     text = models.TextField()
 
 
+class like(models.Model):
+    post = models.ForeignKey(POST, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    like = models.CharField(max_length=300)
+    dislikes = models.CharField(max_length=300)

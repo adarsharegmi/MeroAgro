@@ -1,7 +1,7 @@
 from random import randint
 
 from django.core.files.storage import FileSystemStorage
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User as SUser
 from django.contrib.auth import login, logout, authenticate
@@ -11,6 +11,7 @@ from .models import *
 from django_email_verification import sendConfirm
 from MeroAgro.settings import EMAIL_ADDRESS
 import json
+from PostManagementSystem.views import create_post
 
 cross = 0
 
@@ -24,7 +25,7 @@ def verifyalt(request, user):
         sendConfirm(user)
     except Exception as e:
         print(e)
-    return render(request, "testt.html", {'success': True})
+    return render(request, "emailverify/testt.html", {'success': True})
 
 
 def register_user(request):
@@ -71,7 +72,8 @@ def login_user(request):
             request.session['username'] = User.objects.get(user_email=useremail).user_id
 
             if request.user.is_authenticated:
-                return render(request, 'homepage.html')
+                return redirect('/')
+
         else:
             print("password error")
             return HttpResponse("error password")

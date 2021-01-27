@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block import %}
+    <link rel="stylesheet" href="{% static  'css/homepage.css' %}">
+    {% include 'Base/importing.html' %}
+{% endblock %}
+{% block body %}
+    {% include 'Base/post.html' %}
+{% endblock %}

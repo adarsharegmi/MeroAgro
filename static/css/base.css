@@ -3,7 +3,6 @@
   padding: 0px;
 }
 
-*
 #header {
   max-width: 100%;
   border-radius: 0.2vw;
@@ -22,8 +21,8 @@
 
 .search-box {
   position: relative;
-  margin-left: 3vw;
-  margin-right: 8vw;
+  margin-left: 2vw;
+  margin-right: 4vw;
 }
 
 .search-box input {
@@ -66,4 +65,14 @@
 
 .register-form, .register-form select, .register-form option, .register-form input {
   font-size: 1.5vw;
+}
+
+.container2 {
+  padding: 2vw;
+}
+
+.logo {
+  width: 5vw;
+  height: 5vw;
+  margin-top: -1vw;
 }

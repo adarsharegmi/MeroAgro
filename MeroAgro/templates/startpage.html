@@ -17,10 +17,14 @@
             <p>We aim to connect local farmer with the marketing manager around the country and then upload the
                 daata</p><br>
             <h5>हाम्रो लक्ष्य किसान र बजारहरू एक साथ जोडिएको र उचित देशको प्रबर्धन गर्ने हो</h5>
-            <form>
-                <input type="submit" onsubmit="/signup" value="Join now">
-                <input type="submit" onsubmit="/signin" value="Sign in">
-            </form>
+            <div class="form-inline">
+                <form action="{% url 'register' %}">
+                    <input type="submit" value="Join now">
+                </form>
+                <form action="user/login">
+                    <input type="submit" value="Sign in">
+                </form>
+            </div>
         </div>
         <div class="sub-container">
             <h1>000000</h1> <h5>people have joined and benefited </h5>

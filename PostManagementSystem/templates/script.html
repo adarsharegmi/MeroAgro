@@ -1,0 +1,160 @@
+<script type='text/javascript'>
+    var post_d = {{ post_data|safe }};
+</script>
+
+
+<script>
+    var app = new Vue({
+        delimiters: ['[[', ']]'],
+        el: '#upload_form',
+        data: {
+            count: 1,
+            url: null,
+            image_url: null,
+        },
+        methods: {
+            onFileChange(e) {
+                const file = e.target.files[0];
+                this.url = URL.createObjectURL(file);
+            },
+        },
+    });
+</script>
+
+
+{## script for liking and disliking the post using AJAX request#}
+
+<script type="text/javascript">
+    $('.likebutton').click(function () {
+        var catid;
+        catid = $(this).attr("data-catid");
+        $.ajax(
+            {
+                type: "GET",
+                url: "/like_post",
+                data: {
+                    post_id: catid
+                },
+                success: function (data) {
+                    $('#like' + catid).hide();
+                    $('#dislike' + catid).show()
+                    $('#message' + catid).show()
+                    $('#message2' + catid).hide();
+
+                }
+            })
+        return false;
+    });
+
+    // disliking
+    $('.Dislikebutton').click(function () {
+        var catid;
+        catid = $(this).attr("data-catid");
+        $.ajax(
+            {
+                type: "GET",
+                url: "/dislike_post",
+                data: {
+                    post_id: catid
+                },
+                success: function (data) {
+                    $('#like' + catid).show();
+                    $('#dislike' + catid).hide();
+                    $('#message2' + catid).show();
+                    $('#message' + catid).hide();
+                }
+            })
+        return false;
+    });
+
+    {# Loadmore comments #}
+    $('.load-more-comments').click(function () {
+        var catid;
+        catid = $(this).attr("data-catid");
+
+        {# getting the data size #}
+        var size = $(".individualcomments" + catid).length;
+        var page = $(this).attr("data-page");
+        $(this).attr("data-page", parseInt(page) + 1);
+        $.ajax(
+            {
+                type: "GET",
+                url: "/show_comments",
+                data: {
+                    post_id: catid,
+                    'size': size,
+                    'page': page,
+                },
+                dataType: 'json',
+                beforeSend: function () {
+                    $("#load-more" + catid).addClass('disabled').text("Loading...");
+                },
+                success: function (data) {
+                    var _html = '';
+                    $("#load-more" + catid).addClass('disabled').text("Load More");
+                    var json_data = $.parseJSON(data.comments)
+                    $.each(json_data, function (index, data) {
+                        _html += '<tr class="individualcomments' + catid + '">\
+                          <td>\
+                                    <img src=' + data.fields.user + ' width="50px"\
+                                         height="40px"\
+                                         style="border-radius: 50%;">\
+                                </td>\
+                            <td>' + data.fields.text + '</td>\
+                        </tr>'
+                    });
+                    $("#post-wrapper"+catid).append(_html);
+                    if (!data.hasMore){
+                        $("#load-more"+catid).hide();
+                    }
+                    $("#Hide-all"+catid).show();
+                    console.log(json_data);
+                }
+
+            })
+        return false;
+    });
+
+    $('.hide-all').click(function () {
+        var catid;
+        catid = $(this).attr("data-catid");
+        $('#Hide-all'+catid).hide();
+        $("#load-more"+catid).show();
+        $('#load-more'+catid).attr("data-page",1);
+        $("#post-wrapper"+catid+" tr").remove();
+        return false;
+    });
+</script>
+
+{# for hidding and show #}
+<script>
+    $(".myModal a").click(function () {
+        var link = $(this).attr('href');
+        var showIt = $(link);
+        showIt.hide(1000)
+        return false;
+    });
+
+    $(".showpost").click(function () {
+        var link = $(this).attr('href');
+        var showIt = $(link);
+        showIt.show(1000)
+        return false;
+    });
+
+    $(".show-all-comments").click(function () {
+        var link = $(this).attr('href');
+        var showIt = $(link);
+        showIt.show(1000)
+        return false;
+    });
+    $(".Remaining-comments a").click(function () {
+        var link = $(this).attr('href');
+        var showIt = $(link);
+        showIt.hide(1000)
+        return false;
+    });
+
+
+</script>
+

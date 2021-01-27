@@ -1,16 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load custom_tags %}
 {% block import %}
     <link rel="stylesheet" href="{% static  'css/homepage.css' %}">
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+    {% include 'Base/importing.html' %}
 {% endblock %}
 {% block body %}
-
+</div>
     <div class="upload_class" id="upload_form">
         <form class="upload_form" method="post" enctype="multipart/form-data" action="post">
             {% csrf_token %}
@@ -47,97 +43,32 @@
     </div>
     {#    Dynamic data showing#}
 
-    <div class="show">
-        {% for post in posts %}
-            <div id="show_post">
-
-                <div class="data">
-                    <div class="container">
-                        <div class="row" id="details">
-
-                            <div class="float-left row">
-                                <img src="{{ post.user.profile_pic.profile_picture }}" width="90px" height="40px" class="img"><br>
-                                <p>{{ post.user.user_id }}</p>
-                            </div>
-                            <div class="float-right" style="margin-left: 40vw;" id="ModalId">
-                                <i style="color: #46434B;" onclick="hide()" class="fas fa-ellipsis-h"></i>
-
-                                <div id="myModal">
-                                    <form action="/delete/{{ post.id }}" method="post">
-                                        {% csrf_token %}
-                                        {#                                        <p style="color: #40ac40;">{{ post.id }}</p>#}
-                                        <input type="submit" class="btn btn-danger" value="Delete">
-                                    </form>
-                                    <form action=" edit/{{ post_id }}/" method="post">
-                                        {% csrf_token %}
-                                        <input type="button" class="btn btn-primary" value="Close">
-                                    </form>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div id="content">
-                        {{ post.post_details }}<br>
-                        <img src="{{ post.uploaded_picture }}" class="img">
-                    </div>
-                    <div class="like-container">
-                        <div class="row">
-                            <div class="col-sm">
-                                Like this <i class="fas fa-thumbs-up"></i>
-                            </div>
-                            <div class="col-sm">
-                                Not interested <i class="fas fa-thumbs-down"></i>
-                            </div>
-                        </div>
-
-                        {% include 'comment.html' %}
-
-
-                    </div>
-                </div>
-
-                </div>
-            </div>
-            </div>
-        {% endfor %}
+    <div id="posts-html">
+        {% include 'Base/post.html' %}
     </div>
-
 {% endblock %}
 
 {% block script %}
-
-    <script type='text/javascript'>
-        var post_d = {{ post_data|safe }};
-    </script>
-
+    <script src="/static/js/jquery-2.2.4.min.js"></script>
+    <script src="/static/js/waypoint.js"></script>
+    <script src="/static/js/infinite.min.js"></script>
     <script>
-        var app = new Vue({
-            delimiters: ['[[', ']]'],
-            el: '#upload_form',
-            data: {
-                count: 1,
-                url: null,
-                image_url: null,
+        var infinite = new Waypoint.Infinite({
+            element: $('.infinite-container')[0],
+            handler: function (direction) {
+
             },
-            methods: {
-                onFileChange(e) {
-                    const file = e.target.files[0];
-                    this.url = URL.createObjectURL(file);
-                },
+            offset: 'bottom-in-view',
+            onBeforePageLoad: function () {
+                $('.spinner-border').show();
             },
+            onAfterPageLoad: function () {
+                $('.spinner-border').hide();
+            }
+
+
         });
-    </script>
 
-    <script>
-        function show() {
-            var obj = document.getElementById("myModal");
-            obj.style.display = "block";
-        }
-
-        function hide() {
-            var obj = document.getElementById("myModal");
-            obj.style.display = "none";
-        }
     </script>
+    {% include 'script.html' %}
 {% endblock %}
