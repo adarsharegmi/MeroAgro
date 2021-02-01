@@ -32,7 +32,8 @@
                             <label for="inputimage"><img src="{% static "images/uploadpic.png" %}" width="50px"
                                                          height="50px"> Change image</label>
                             <div id="preview">
-                                <img v-if="url" :src="url" style="background-color: #46434B; max-width: 100%;top: 100px;">
+                                <img v-if="url" :src="url"
+                                     style="background-color: #46434B; max-width: 100%;top: 100px;">
                             </div>
                         </div>
                         <input v-if="url" type="submit" class="btn btn-primary" value="Save new profile picture">
@@ -64,6 +65,8 @@
 
 
         </div>
+        <a v-if="[[current]]==1">Its me</a>
+        <a v-bind:href="'/chat/message/'+ id" v-else>Message</a>
     </div>
 {% endblock body %}
 
@@ -84,13 +87,16 @@
                 address: user_d['address'],
                 password: user_d['password'],
                 profile: user_d['profileimage'],
-                url:null,
+                url: null,
+                id: user_d['id'],
+                current: user_d['current']
             },
             methods: {
                 onFileChange(e) {
-                const file = e.target.files[0];
-                this.url = URL.createObjectURL(file);
-            },}
+                    const file = e.target.files[0];
+                    this.url = URL.createObjectURL(file);
+                },
+            }
         });
     </script>
 

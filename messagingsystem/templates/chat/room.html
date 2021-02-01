@@ -55,7 +55,7 @@
 
     {% if messages %}
         {% for message in messages %}
-            {% if user_id == message.user.userId %}
+            {% if user_id == message.user_id %}
                 <p style="background-color: white; margin-left: 5vw;margin-top: 3px; padding: 5px; height: fit-content; width: 50%; border-radius: 5px;">{{ message.messageText }}</p>
             {% else %}
                 <p style="background-color: #28f328; margin-right: 5vw; margin-left:15vw; margin-top: 3px; padding: 5px; height: fit-content; width: 50%; border-radius: 5px;">{{ message.messageText}}</p>

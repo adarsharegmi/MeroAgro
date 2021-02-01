@@ -13,31 +13,30 @@ def index(request):
 
 
 @csrf_exempt
-def room(request):
-    print("loading room view")
-    room_name = request.POST['room']
-    user = request.POST.get('user')
-    print(room_name)
-    # breakpoint()
+def room(request,user_id):
+    u1 = User.objects.get(id=request.session['id'])
+    u2 = User.objects.get(id=user_id)
 
+    room = Room.objects.filter(user=u1).filter(user=u2)
+
+    #
     try:
-        ms = all_messages(room_name)
+        ms = all_messages(room[0].id)
         print("all the messages",ms)
         return render(request, 'chat/room.html', {
-            'room_name': room_name,
-            'user_id': user,
+            'room_name': room[0].room_name,
+            'user_id': u1.id,
             'messages':ms
         })
     except :
         return render(request,'chat/room.html',{
-            'room_name':room_name,
-            'user_id':user
+            'room_name':"room"+str(Room.objects.all().count()+1),
+            'user_id':u1.id
         })
 
 
-def all_messages(room_name):
-    room_id = Room.objects.get(room_name=room_name)
-    print("the messages---",room_id.id)
+def all_messages(room_id):
+    print("the messages---",room_id)
     ms = Message.objects.filter(user_room=room_id)
 
     return ms

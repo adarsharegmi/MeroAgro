@@ -85,7 +85,6 @@ def login_user(request):
         return render(request, 'login.html')
 
 
-
 def google_sign_in(request):
     if request.method == 'POST':
         useremail = request.POST['gusername']
@@ -99,16 +98,16 @@ def google_sign_in(request):
             fullname = request.POST['gname']
             import random
             mask = str(random.randint(100000))
-            user_obj = User(user_id=fullname,user_password=mask)
+            user_obj = User(user_id=fullname, user_password=mask)
             user_obj2 = SUser.objects.create_user(get_username, get_username, mask)
-            image = Images(name=user_obj,profile_picture=image_url)
+            image = Images(name=user_obj, profile_picture=image_url)
 
             user_obj.save()
             image.save()
 
         user_object = User.objects.get(user_email=useremail)
         user = authenticate(username=user_object.user_email, password=user_object.user_password)
-        login(request,user)
+        login(request, user)
 
         request.session['id'] = user_object.id
         request.session['username'] = User.objects.get(user_email=useremail).user_id
@@ -136,7 +135,7 @@ def send_reset(request):
     toemail = request.POST['uemail']
     request.session['email'] = toemail
 
-    context = {"cross":cross}
+    context = {"cross": cross}
 
     try:
         user = User.objects.get(user_email=toemail)
@@ -171,26 +170,36 @@ def update_password(request):
         return render(request, "login.html")
 
 
-def show_user(request):
-    user = request.session['id']
+def show_user(request, user_id=0):
+    context = {}
+
+    if user_id == 0:
+        data = get_user(request, request.session['id'])
+        data['current'] = 1
+        context["user_data"] = json.dumps(data)
+    else:
+        data = get_user(request, user_id)
+        data['current'] = 0
+        context['user_data'] = json.dumps(data)
+    return render(request, 'userdetails.html',
+                  context)
+
+
+def get_user(request, user):
     u = User.objects.get(id=user)
     address = u.user_address
     password = u.user_password
     useremail = u.user_email
     username = request.session['username']
-    context = {}
     try:
         image = Images.objects.get(id=user)
-        data = {"address": address, "email": useremail, "password": password, "username": username,
+        data = {"id": user, "address": address, "email": useremail, "password": password, "username": username,
                 "profileimage": image.profile_picture.url}
     except:
-        data = {"address": address, "email": useremail, "password": password, "username": username,
+        data = {"id": user, "address": address, "email": useremail, "password": password, "username": username,
                 "profileimage": "/default/pp.png"}
 
-    context["user_data"] = json.dumps(data)
-
-    return render(request, 'userdetails.html',
-                  context)
+    return data
 
 
 def update_user_details(request):
@@ -220,8 +229,6 @@ def update(request, n, user_id):
         user_obj = User.objects.get(id=user_id)
         # update user details
         get_username = request.POST['username']
-        img_obj.name = request.POST['username']
-
         get_address = request.POST['useraddress']
         get_email = request.POST['useremail']
 
@@ -231,7 +238,6 @@ def update(request, n, user_id):
         user_obj.save()
         img_obj.save()
         request.session['username'] = get_username
-
 
     elif n == 2:
 
