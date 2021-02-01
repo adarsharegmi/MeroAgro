@@ -3,24 +3,6 @@
 </script>
 
 
-<script>
-    var app = new Vue({
-        delimiters: ['[[', ']]'],
-        el: '#upload_form',
-        data: {
-            count: 1,
-            url: null,
-            image_url: null,
-        },
-        methods: {
-            onFileChange(e) {
-                const file = e.target.files[0];
-                this.url = URL.createObjectURL(file);
-            },
-        },
-    });
-</script>
-
 
 {## script for liking and disliking the post using AJAX request#}
 

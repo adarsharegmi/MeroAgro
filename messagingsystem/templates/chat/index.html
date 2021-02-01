@@ -1,0 +1,49 @@
+<!-- chat/templates/chat/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Rooms</title>
+</head>
+<body>
+<form method="post" action="message/">
+    What chat room would you like to enter?<br>
+    <input id="room-name-input" name="room" type="text" size="100"><br>
+    enter your id for testing phase
+    <input id="user-id-input" name="user" type="text" size="100"><br>
+
+    <input id="room-name-submit" type="submit" value="Enter" >
+</form>
+{#    <script>#}
+{#        document.querySelector('#room-name-input').focus();#}
+{#        document.querySelector('#room-name-input').onkeyup = function(e) {#}
+{#            if (e.keyCode === 13) {  // enter, return#}
+{#                document.querySelector('#room-name-submit').click();#}
+{#            }#}
+{#        };#}
+{##}
+{#        document.querySelector('#room-name-submit').onclick = function(e) {#}
+{#            var roomName = document.querySelector('#room-name-input').value;#}
+{#            var user_id = document.querySelector('#user-id-input').value;#}
+{#window.location.pathname = '/chat/' + roomName + '/'+user_id+'/';#}
+{#            const datas ={#}
+{#                name :roomName,#}
+{#                id : user_id#}
+{#            }#}
+{#            $.ajax({#}
+{#                type:'POST',#}
+{#                url:'/chat/message/',#}
+{#                data:datas,#}
+{#                success: function (response) {#}
+{#                    window.location.href = 'message'#}
+{#                }#}
+{#            });#}
+{#            console.log(datas);#}
+{#        };#}
+{##}
+{##}
+{#    </script>#}
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+</body>
+</html>

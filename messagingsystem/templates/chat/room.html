@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8"/>
+    <title>Chat Room</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+
+<body>
+
+<style>
+    /* width */
+    ::-webkit-scrollbar {
+        width: 20px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0);
+        border-radius: 5px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #205aba;
+        border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #205aba;
+    }
+</style>
+
+<div class="card"
+     style="width: 50%; padding: 2vw; margin-left: 40vw; background-image: linear-gradient(to bottom, #3679de, #3078df, #2977df, #2077e0, #1376e1);">
+    <div class="card-header" style="border-radius: 10px; color: white; font-family: Georgia; font-size: 1.7vw;">
+        <div class="d-flex float-left">
+            <div>Username</div>
+        </div>
+        <div class="d-flex float-right">
+            <div><i style="font-size: 1.7vw;" class="fas fa-user"></i></div>
+        </div>
+    </div>
+    <div class="card-body" id="show messages"
+         style=" width: 100%;overflow-y: scroll; height: 30vw;">
+
+    {% if messages %}
+        {% for message in messages %}
+            {% if user_id == message.user.userId %}
+                <p style="background-color: white; margin-left: 5vw;margin-top: 3px; padding: 5px; height: fit-content; width: 50%; border-radius: 5px;">{{ message.messageText }}</p>
+            {% else %}
+                <p style="background-color: #28f328; margin-right: 5vw; margin-left:15vw; margin-top: 3px; padding: 5px; height: fit-content; width: 50%; border-radius: 5px;">{{ message.messageText}}</p>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <img class="rounded mx-auto d-block" src="{% static 'images/profile.png'%}" width="20%" height="20%">
+        <br>
+    {% endif %}
+    </div>
+    <div class="card-footer">
+        <div class="row justify-content-center p-1">
+            <input id="chat-message-input" class="form-control col-7 p-3" type="text"
+                   placeholder="Enter your message here">
+            <input class="col-3 btn btn-primary p-1" id="chat-message-submit" type="button" value="Send">
+        </div>
+    </div>
+</div>
+
+
+{{ room_name|json_script:"room-id" }}
+{{ user_id|json_script:"user-id" }}
+{#{{ messages }}#}
+
+
+<script>
+    {#    let s know user typing #}
+
+    var el = document.getElementById("chat-message-input");
+    el.addEventListener('keyup', function () {
+        var load = document.getElementById('loading');
+        if (load) {
+            if (el.value.length == 0) {
+
+                setTimeout(function () {
+                    load.remove()
+                }, 4000);
+                return false;
+                {#    checks for 4s and if no input is received loadng disappears#}
+            } else {
+                return false;
+            }
+        }
+
+        var message = document.createElement("p")
+        message.style.marginLeft = "7vw"
+        message.setAttribute("id", "loading")
+        message.style.color = "white"
+        var text = document.createTextNode("someone is typing...")
+        message.append(text)
+        var div = document.getElementById('show messages');
+        div.appendChild(message);
+
+    });
+
+</script>
+
+{#for web sockets#}
+<script>
+    const room_id = JSON.parse(document.getElementById('room-id').textContent);
+    const user_id = JSON.parse(document.getElementById('user-id').textContent);
+
+    {#    ws/localhost/path#}
+
+    const chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/chat/'
+        + room_id
+        + '/'
+        + user_id
+        + '/'
+    );
+
+    chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        {#we need to create a new p tag for showing data#}
+        {#  lets first avoid null messages to be send #}
+        if (data.message.trim().length == 0) {
+            return false;
+        }
+
+
+        const message = document.createElement("p");
+        if (data.user == user_id) {
+            message.style.backgroundColor = "white"
+            message.style.marginLeft = "5vw"
+        }else{
+            message.style.backgroundColor = "#28f328"
+            message.style.marginLeft ="15vw"
+        }
+        message.style.marginTop = "3px"
+        message.style.padding = "5px"
+        message.style.height = "fit-content"
+        message.style.width = "50%"
+        message.style.borderRadius = "5px"
+        const text = document.createTextNode(data.message);
+        message.append(text)
+
+        const div = document.getElementById('show messages');
+        div.appendChild(message);
+        div.scrollTop = message.offsetHeight + message.offsetTop;
+        document.getElementById('loading').remove()
+    };
+
+    chatSocket.onclose = function (e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#chat-message-input').focus();
+    document.querySelector('#chat-message-input').onkeyup = function (e) {
+        if (e.keyCode === 13) {  // enter, return
+            document.querySelector('#chat-message-submit').click();
+        }
+    };
+
+    document.querySelector('#chat-message-submit').onclick = function (e) {
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message': message,
+        }));
+        messageInputDom.value = '';
+    };
+</script>
+</body>
+</html>

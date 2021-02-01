@@ -37,6 +37,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+    'messagingsystem',
     'django.contrib.admin',
     'django.contrib.auth',
     'django_email_verification',
@@ -85,9 +87,30 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'MeroAgro.wsgi.application'
+ASGI_APPLICATION  = 'MeroAgro.asgi.application'
+
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [("127.0.0.1", 6379)],
+#         },
+#     },
+# }
+
+
+# also for testing immem channel layers
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
+
 
 
 # Database
+
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
@@ -143,3 +166,5 @@ STATICFILES_DIRS=(
 #  default storage system
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/'
+
+STATIC_ROOT = '/static'

@@ -8,6 +8,7 @@ urlpatterns = [
     path('signup', register_user),
     path('login', loginPage, name='login_user'),
     path('login_user', login_user),
+    path('google_sign_in',google_sign_in,name='google_sign_in'),
     path('signout', logout_user, name='signout'),
 
     #     for email reset

@@ -12,7 +12,7 @@
                                          class="img">
 
                                 </div>
-                            <div class="col-4"> <p>{{ post.user.user_id }}</p></div>
+                                <div class="col-4"> <a class="user_details" href="show_profile">{{ post.user.user_id }}</a></div>
                                 <div class="col-7">
                                     {% if post.user.id == user %}
                                         <div class="float-right" style="margin-left: 40vw;" class="ModalId">

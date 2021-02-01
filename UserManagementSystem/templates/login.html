@@ -27,11 +27,34 @@
         {#    for google signu in  button#}
 
 
+        <div id="signin" class="g-signin2 form-control" data-onsuccess="onSignIn"></div>
 
-        <div class="g-signin2 form-control" data-onsuccess="onSignIn"></div>
-        <button v-on:click = "displaynumbers">Click ME</button>
+            <form action="google_sign_in" method="post" id="loaded">
+                {% csrf_token %}
+                <button type="submit" id="linktag" style=" font-style: normal;
+                font-family: 'Rockwell Extra Bold';" ></button>
+                <input type="text"  name="gusername" id="googleusername" hidden>
+                <input type="text" name="gprofile" id="googleprofile" hidden>
+                <input type="text" name="gname" id="googlename" hidden>
+            </form>
+        </div>
 
-         <button onclick="signOut()">Sign Out</button>
+        <style>
+            #loaded{
+                display: none;
+            }
+            #linktag {
+                color: white;
+                background-color: #40ac40;
+                border-width: 0px;
+                border-style: solid;
+                border-color: white;
+                padding: 10px;
+                margin-left: 3vw;
+
+            }
+        </style>
+        {#         <button onclick="signOut()">Sign Out</button>#}
 
 
         <div id="content"></div>
@@ -46,38 +69,31 @@
         function onSignIn(googleUser) {
             var auth2 = gapi.auth2.init();
             var profile = auth2.currentUser.get().getBasicProfile();
-            console.log('ID: ' + profile.getId());
-            console.log('Full Name: ' + profile.getName());
-            console.log('Given Name: ' + profile.getGivenName());
-            console.log('Family Name: ' + profile.getFamilyName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail());
+            {#$.ajax({#}
+            {#    type: 'POST',#}
+            {#    url: "/google_sign_in/",#}
+            {#    data : { 'useremail': profile.getEmail(),#}
+            {#            'profile':profile.getImageUrl(),#}
+            {#            'fullname':profile.getName() },})#}
 
-            var element = document.querySelector('#content')
-            element.innerHTML = profile.getName();
-
-            var image = document.createElement('img')
-            image.setAttribute('src', profile.getImageUrl())
-            element.append(image)
+            document.getElementById('loaded').style.display = "block"
+            document.getElementById('signin').style.display = 'none'
+            document.getElementById('linktag').innerText = "Continue as " + profile.getEmail()
+            document.getElementById('googleusername').value = profile.getEmail()
+            document.getElementById('googleprofile').value = profile.getImageUrl()
+            document.getElementById('googlename').value = profile.getName()
         }
-
-            function signOut() {
-                gapi.auth2.getAuthInstance().signOut().then(function(){
-                console.log("User signed out")
-            })
-            }
-            // adding vue componene
 
     </script>
 
-{#    <a href="#" onclick="signOut();">Sign out</a>#}
-{#    <script>#}
-{#        function signOut() {#}
-{#            var auth2 = gapi.auth2.getAuthInstance();#}
-{#            auth2.signOut().then(function () {#}
-{#                console.log('User signed out.');#}
-{#            });#}
-{#        }#}
-{#    </script>#}
+    {#    <a href="#" onclick="signOut();">Sign out</a>#}
+    {#    <script>#}
+    {#        function signOut() {#}
+    {#            var auth2 = gapi.auth2.getAuthInstance();#}
+    {#            auth2.signOut().then(function () {#}
+    {#                console.log('User signed out.');#}
+    {#            });#}
+    {#        }#}
+    {#    </script>#}
 
 {% endblock body %}

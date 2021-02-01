@@ -17,6 +17,8 @@ cross = 0
 
 
 def create_user(request):
+    if request.user.is_authenticated:
+        return redirect('/')
     return render(request, 'signup.html')
 
 
@@ -58,6 +60,8 @@ def register_user(request):
 
 
 def loginPage(request):
+    if request.user.is_authenticated:
+        return redirect('/')
     return render(request, "login.html")
 
 
@@ -79,6 +83,38 @@ def login_user(request):
             return HttpResponse("error password")
     else:
         return render(request, 'login.html')
+
+
+
+def google_sign_in(request):
+    if request.method == 'POST':
+        useremail = request.POST['gusername']
+
+        user = User.objects.get(user_email=useremail)
+        print(user)
+
+        if user is None:
+            get_username = request.POST['gusername']
+            image_url = request.POST['gprofile']
+            fullname = request.POST['gname']
+            import random
+            mask = str(random.randint(100000))
+            user_obj = User(user_id=fullname,user_password=mask)
+            user_obj2 = SUser.objects.create_user(get_username, get_username, mask)
+            image = Images(name=user_obj,profile_picture=image_url)
+
+            user_obj.save()
+            image.save()
+
+        user_object = User.objects.get(user_email=useremail)
+        user = authenticate(username=user_object.user_email, password=user_object.user_password)
+        login(request,user)
+
+        request.session['id'] = user_object.id
+        request.session['username'] = User.objects.get(user_email=useremail).user_id
+
+        return redirect('/')
+    return HttpResponse("Haha tried something out of  the setting ..  check documentation")
 
 
 def logout_user(request):

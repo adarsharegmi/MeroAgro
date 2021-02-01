@@ -11,6 +11,7 @@ urlpatterns = [
     path('user/', include("UserManagementSystem.urls")),
     path('email/', include(mail_urls)),
     path('',include("PostManagementSystem.urls")),
+    path('chat/', include('messagingsystem.urls')),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
