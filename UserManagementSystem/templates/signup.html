@@ -24,8 +24,12 @@
                     Account Now</h1>
 
                 <div class="col-md-6" id="row">
+                    {% if message %}
+                        <div style="background-color: #007cc6; text-align: center;"> {{ message }}<br></div>
+                    {% endif %}
                     <div class="rowsub">
-                        <form class="p-4 text-white" method="post" action="signup" autocomplete="off" enctype="multipart/form-data">
+                        <form class="p-4 text-white" method="post" action="signup" autocomplete="off"
+                              enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="name"><i class="fas fa-user"></i> UserName</label>
@@ -33,7 +37,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="email"><i class="fas fa-envelope"></i> Email Address </label>
-                                <input type="email" name="useremail" class="form-control" required>
+                                <input type="email" id="email-address" name="useremail" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="address"><i class="fas fa-map-marked-alt"></i> Address</label>
@@ -41,14 +45,28 @@
                             </div>
                             <div class="form-group">
                                 <label for="pwd"><i class="fas fa-lock"></i> Enter Password</label>
-                                <input type="password" name="userpassword" class="form-control" id="upa1"
-                                       onkeyup="check();"
-                                       required>
+                                <div class="input-group mb-3">
+                                    <input type="password" name="userpassword" class="form-control" id="upa1" required>
+                                    <div class="input-group-append" style="background-color: white;">
+                                        <img id="upimg" src="{% static 'images/eye.png' %}" width="50px" height="50px"
+                                             style="padding: 10px"
+                                             onclick="show_password('upa1')">
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="form-group">
                                 <label for="cpwd"><i class="fas fa-lock"></i> Confirm Password</label>
-                                <input type="password" name="ucheckpassword" class="form-control" id="upa2"
-                                       onkeyup="check();" required>
+                                <div class="input-group mb-3">
+                                    <input type="password" name="ucheckpassword" class="form-control" id="upa2"
+                                           required>
+                                    <div class="input-group-append" style="background-color: white;">
+                                        <img id="upimg2" src="{% static 'images/eye.png' %}" width="50px" height="50px"
+                                             style="padding: 10px"
+
+                                             onclick="show_password('upa2')">
+                                    </div>
+                                </div>
 
                             </div>
                             <div class="form-group">
@@ -79,6 +97,7 @@
 
 
 {% block script %}
+
     <script>
         var password = document.getElementById("upa1")
             , confirm_password = document.getElementById("upa2"),
@@ -93,19 +112,49 @@
 
         }
 
-        upa1.onchange = validatePassword;
+        function check_password() {
+            if (password.value.length < 8) {
+                password.setCustomValidity('At least 8 characters are required')
+
+            } else {
+                var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+                if (format.test(password.value)) {
+                    password.setCustomValidity('')
+                } else {
+                    password.setCustomValidity('password needs special character')
+                }
+            }
+        }
+
+        upa1.onchange = check_password;
         upa2.onkeyup = validatePassword;
         email.onchange = validateEmail;
 
+
         function validateEmail() {
+
             if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value)) {
+                alert("hellow ")
                 email.setCustomValidity("");
+                {#  make ajax request for checking if user exists  #}
             } else {
                 email.setCustomValidity("Email address is not valid");
             }
         }
 
 
+    </script>
+
+    <script>
+        function show_password(t, img) {
+            var x = document.getElementById(t);
+            var y = document.getElementById(img);
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
     </script>
 {% endblock script %}
 {% block footer %} {% endblock %}

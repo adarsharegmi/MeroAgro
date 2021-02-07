@@ -1,7 +1,7 @@
 from random import randint
 
 from django.core.files.storage import FileSystemStorage
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User as SUser
 from django.contrib.auth import login, logout, authenticate
@@ -33,11 +33,21 @@ def create_user(request):
     return render(request, 'signup.html')
 
 
+def check_username(email):
+    return SUser.objects.filter(username__iexact=email).exists()
+
+
+
 def register_user(request):
+
     if request.method == 'POST':
         get_username = request.POST['username']
         get_address = request.POST['useraddress']
         get_email = request.POST['useremail']
+
+        if check_username(get_email):
+            return render(request,'signup.html',{'message':'user email already used'})
+
         get_password = request.POST['userpassword']
         # get_password = hash(get_password)
         get_type = request.POST['usertype']
@@ -115,8 +125,7 @@ def login_user(request):
                 return redirect('/')
 
         else:
-            print("password error or email not verified")
-            return HttpResponse('password error')
+            return render(request,'login.html',{'message':'credentials mismatched'})
     else:
         return render(request, 'login.html')
 

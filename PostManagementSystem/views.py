@@ -10,6 +10,8 @@ import json
 
 # Create your views here.
 def create_post(request):
+    if not request.user.is_authenticated:
+        return render(request,'startpage.html')
 
     try:
         u = get_User(request)
@@ -27,6 +29,7 @@ def create_post(request):
         return render(request, "homepage.html", data)
     except Exception as e:
         return render(request, "startpage.html")
+
 
 def save_post(request):
     # fs = FileSystemStorage()

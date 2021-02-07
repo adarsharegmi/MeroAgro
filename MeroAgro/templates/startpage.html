@@ -21,7 +21,8 @@
                 <form action="{% url 'register' %}">
                     <input type="submit" value="Join now">
                 </form>
-                <form action="user/login">
+                <form action="{% url 'login_user' %}">
+
                     <input type="submit" value="Sign in">
                 </form>
             </div>

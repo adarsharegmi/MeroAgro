@@ -43,7 +43,12 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# session time
+SESSION_COOKIE_AGE = 3600
+#  1 hour
+
 # Application definition
+
 
 INSTALLED_APPS = [
     'channels',

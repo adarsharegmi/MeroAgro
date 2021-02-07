@@ -9,8 +9,11 @@
 {% block body %}
 
     <div id="login_div">
-        <img class="lazy" src="{% static 'images/unused/man2.png' %}">
+        <img src="{% static 'images/unused/man2.png' %}">
         <form id="login_form" action="login_user" method="post">
+            {% if message %}
+                <div style="text-align: center; background-color: #007cc6; color: white; margin: 10px;">{{ message }}</div>
+            {% endif %}
             {% csrf_token %}
             <div class="form-group">
                 <input type="email" name="useremail" class="form-control" placeholder="enter email address" required>
@@ -69,13 +72,6 @@
         function onSignIn(googleUser) {
             var auth2 = gapi.auth2.init();
             var profile = auth2.currentUser.get().getBasicProfile();
-            {#$.ajax({#}
-            {#    type: 'POST',#}
-            {#    url: "/google_sign_in/",#}
-            {#    data : { 'useremail': profile.getEmail(),#}
-            {#            'profile':profile.getImageUrl(),#}
-            {#            'fullname':profile.getName() },})#}
-
             document.getElementById('loaded').style.display = "block"
             document.getElementById('signin').style.display = 'none'
             document.getElementById('linktag').innerText = "Continue as " + profile.getEmail()
@@ -86,14 +82,6 @@
 
     </script>
 
-    {#    <a href="#" onclick="signOut();">Sign out</a>#}
-    {#    <script>#}
-    {#        function signOut() {#}
-    {#            var auth2 = gapi.auth2.getAuthInstance();#}
-    {#            auth2.signOut().then(function () {#}
-    {#                console.log('User signed out.');#}
-    {#            });#}
-    {#        }#}
-    {#    </script>#}
+{# now #}
 
 {% endblock body %}
