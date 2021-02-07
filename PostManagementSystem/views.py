@@ -36,13 +36,16 @@ def save_post(request):
     if request.method == 'POST' and request.FILES:
         get_text = request.POST['text']
         get_type = request.POST['type']
-        get_picture = request.FILES['profilepicture']
+        get_pictures = request.FILES.getlist('post_pictures')
+
+
         # get_profile = fs.save("uu", get_picture)
         user = request.session['id']
         u = User.objects.get(id=user)
         post = POST(post_details=get_text, post_type=get_type, user=u)
-        post.uploaded_picture = get_picture
         post.save()
+        for p in get_pictures:
+            PostImages(uploaded_picture=p,post=post).save()
 
     data = {}
     posts = list(POST.objects.all())

@@ -2,11 +2,24 @@
 {% load static %}
 {% load custom_tags %}
 {% block import %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+
     <link rel="stylesheet" href="{% static  'css/homepage.css' %}">
     {% include 'Base/importing.html' %}
 {% endblock %}
 {% block body %}
-</div>
     <div class="upload_class" id="upload_form">
         <form class="upload_form" method="post" enctype="multipart/form-data" action="post">
             {% csrf_token %}
@@ -25,19 +38,36 @@
             <br>
 
             <div class="row" id="roww">
-                <div v-for="n in count">
-                    <input type="file" name="profilepicture" id="inputimage"
-                           accept="image/gif, image/jpeg, image/png" hidden @change="onFileChange">
-                    <label for="inputimage"><img src="{% static "images/uploadpic.png" %}" width="40px"
-                                                 height="40px"> Choose image</label>
-                    <div id="preview">
-                        <img v-if="url" :src="url" width="90px" height="90px"/>
-                    </div>
+                <input type="file" name="post_pictures" id="inputimage"
+                       accept="image/gif, image/jpeg, image/png" @change="onFileChange" hidden multiple>
+                <label for="inputimage"><img src="{% static "images/uploadpic.png" %}" width="40px"
+                                             height="40px"> Choose image</label>
 
+
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img :src="url[0]" class="d-block w-100" width="5vw" height="250px" alt="...">
+                        </div>
+                        <div v-for="n in count" class="carousel-item">
+                            <img :src="url[n]" class="d-block w-100" width="5vw" height="250px" alt="...">
+                        </div>
+
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+                       data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+                       data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
-                <input type="button" class="AddMore" value="Add More &#9547" v-on:click="count+=1">
+
             </div>
-            <br>
+            <input type="button" class="AddMore" value="Add More &#9547" onclick="test()">
             <input type="submit" value="Upload" class="AddMore" id="uploadingbtn">
         </form>
     </div>
@@ -73,21 +103,25 @@
     {% include 'script.html' %}
 
     <script>
-    var app = new Vue({
-        delimiters: ['[[', ']]'],
-        el: '#upload_form',
-        data: {
-            count: 1,
-            url: null,
-            image_url: null,
-        },
-        methods: {
-            onFileChange(e) {
-                const file = e.target.files[0];
-                this.url = URL.createObjectURL(file);
+        var app = new Vue({
+            delimiters: ['[[', ']]'],
+            el: '#upload_form',
+            data: {
+                count: 1,
+                url: [],
+                image_url: null,
+                num: 0
             },
-        },
-    });
-</script>
+            methods: {
+                onFileChange(e) {
+                    this.num = e.target.files.length
 
+                    for (var i = 0; i < this.num; i++) {
+                        this.url[i] = URL.createObjectURL(e.target.files[i])
+                    }
+                    this.count =this.num-1
+                },
+            },
+        });
+    </script>
 {% endblock %}
