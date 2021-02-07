@@ -1,21 +1,20 @@
 {% extends 'base.html' %}
 
 
-
 {% load static %}  {# for static files#}
 
 {% block body %}
     <style>
-    body{
-        text-align: center;
-        background-color: #878b87;
-    }
+        body {
+            text-align: center;
+            background-color: #878b87;
+        }
     </style>
-<br><br><bR>
+    <br><br><bR>
     {% if success %}
-        You have confirmed your account!<br> You can proceed to login section
+        {{ user.username }}, your account is confirmed!
     {% else %}
-        Error, invalid token! check your email again or contact us if problem persists
+        Error, invalid token!
     {% endif %}
 
 {% endblock %}

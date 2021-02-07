@@ -6,7 +6,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 
+def verified_callback(user):
+    user.is_active = True
+
 # for email setting
+EMAIL_VERIFIED_CALLBACK = verified_callback
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_SERVER = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
@@ -24,7 +28,12 @@ EMAIL_PAGE_TEMPLATE='Response.html'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'testadarsha5@gmail.com'
 EMAIL_HOST_PASSWORD = 'nepali**--te'
+EMAIL_TOKEN_LIFE = 60 * 60
 #
+
+
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'w-+(1*zk=qrwr6hzt@(54%#^hlk7-2l*rf^6&vxq9b0r7n-ysl'
 
@@ -41,7 +50,7 @@ INSTALLED_APPS = [
     'messagingsystem',
     'django.contrib.admin',
     'django.contrib.auth',
-    'django_email_verification',
+    'verify_email',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',

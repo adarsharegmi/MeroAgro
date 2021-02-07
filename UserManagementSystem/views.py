@@ -6,11 +6,22 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User as SUser
 from django.contrib.auth import login, logout, authenticate
 
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+from .tokens import account_activation_token
+from django.core.mail import EmailMessage
+
+from verify_email.email_handler import send_verification_email
+
+
 from django.shortcuts import render
 from .models import *
-from django_email_verification import sendConfirm
 from MeroAgro.settings import EMAIL_ADDRESS
 import json
+import re
+
 from PostManagementSystem.views import create_post
 
 cross = 0
@@ -20,14 +31,6 @@ def create_user(request):
     if request.user.is_authenticated:
         return redirect('/')
     return render(request, 'signup.html')
-
-
-def verifyalt(request, user):
-    try:
-        sendConfirm(user)
-    except Exception as e:
-        print(e)
-    return render(request, "emailverify/testt.html", {'success': True})
 
 
 def register_user(request):
@@ -48,8 +51,22 @@ def register_user(request):
         user_obj2 = SUser.objects.create_user(get_email, get_email, get_password)
 
         image = Images(name=user_obj)
+        user_obj2.is_active = False
+        user_obj2.save()
+        current_site = get_current_site(request)
+        token = account_activation_token.make_token(user_obj2)
+        message = render_to_string('emailverify/testt.html', {
+            'user': user_obj2,
+            'domain': current_site.domain,
+            'uid': urlsafe_base64_encode(force_bytes(user_obj2.pk)),
+            'token':token,
+        })
+        mail_subject = 'Active your MeroAgro Account.'
+        to_email = get_email
+        email = EmailMessage(mail_subject, message, to=[to_email])
+        email.send()
+        print("before",str(token))
 
-        verifyalt(request, user_obj2)
         user_obj.save()
         user_obj2.save()
         image.save()
@@ -57,6 +74,25 @@ def register_user(request):
         return HttpResponse("Check your email and verify your account... Thank you ")
     else:
         return redirect(request, 'signup.html')
+
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = SUser.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+        print(token)
+    # breakpoint()
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        # return redirect('home')
+
+        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
 
 
 def loginPage(request):
@@ -79,8 +115,8 @@ def login_user(request):
                 return redirect('/')
 
         else:
-            print("password error")
-            return HttpResponse("error password")
+            print("password error or email not verified")
+            return HttpResponse('password error')
     else:
         return render(request, 'login.html')
 
